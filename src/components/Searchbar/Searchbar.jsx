@@ -1,22 +1,49 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { Notify } from 'notiflix';
+
 
 
 export class Searchbar extends Component {
+
+  state = {
+    query: '',
+  };
+
+  handleChange = (e) => {
+    this.setState({ query: e.target.value});
+    console.log(e.target.value);
+  }
+
+  handleSubmit = (e) => { 
+    e.preventDefault();
+
+    if (this.state.query.trim() === '') {
+      return Notify.warning('Enter a query', { position: "center-top"});
+    }
+
+    this.props.onSubmit(this.state);
+    this.setState({ query: '' });
+    console.log(this.state.query);
+  };
+
   render() {
+    // console.log(this.handleSubmit);
     return (
         <Header>
-          <SearchForm class="form">
-            <button type="submit" class="button">
-              <span class="button-label">Search</span>
-            </button>
+          <SearchForm onSubmit={this.handleSubmit}>
+            <SearchFormBtm type="submit">
+              <SearchFormBtmLabel>Search</SearchFormBtmLabel>
+            </SearchFormBtm>
 
-            <input
-              class="input"
+            <SearchFormInput
               type="text"
-              autocomplete="off"
-              autofocus
+              autoComplete="off"
+              autoFocus
               placeholder="Search images and photos"
+              name="query"
+              onChange={this.handleChange}
+              value={this.state.query}
             />
           </SearchForm>
         </Header>
@@ -51,4 +78,47 @@ const SearchForm = styled.form`
   background-color: #fff;
   border-radius: 3px;
   overflow: hidden;
+`
+
+const SearchFormBtm = styled.button`
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  background-size: 40%;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.6;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  outline: none;
+    &:hover {
+    opacity: 1;
+    }
+`
+
+const SearchFormBtmLabel = styled.span`
+  // position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+`
+
+const SearchFormInput = styled.input`
+  display: inline-block;
+  width: 100%;
+  font: inherit;
+  font-size: 20px;
+  border: none;
+  outline: none;
+  padding-left: 4px;
+  padding-right: 4px;
+    &::placeholder {
+    font: inherit;
+    font-size: 18px;
+    }
 `

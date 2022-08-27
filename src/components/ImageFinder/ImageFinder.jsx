@@ -7,10 +7,22 @@ import { Searchbar } from "components/Searchbar/Searchbar";
 import styled from "styled-components";
 
 export class ImageFinder extends Component {
-  render () {
+
+  state = {
+    query: '',
+  }
+
+  onSubmit = (query) => {
+    this.setState({query})
+    
+  }
+
+  render() {
+    
+
     return (
       <Card>
-        <Searchbar/>
+        <Searchbar onSubmit={this.onSubmit} />
         <ApiReact/>
         {/* <Modal/> */}
       </Card>

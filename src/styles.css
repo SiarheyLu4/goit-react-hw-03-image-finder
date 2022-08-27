@@ -71,7 +71,7 @@ img {
   overflow: hidden;
 } */
 
-.SearchForm-button {
+/* .SearchForm-button {
   display: inline-block;
   width: 48px;
   height: 48px;
@@ -88,9 +88,9 @@ img {
 
 .SearchForm-button:hover {
   opacity: 1;
-}
+} */
 
-.SearchForm-button-label {
+/* .SearchForm-button-label {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -100,9 +100,9 @@ img {
   white-space: nowrap;
   clip-path: inset(50%);
   border: 0;
-}
+} */
 
-.SearchForm-input {
+/* .SearchForm-input {
   display: inline-block;
   width: 100%;
   font: inherit;
@@ -111,12 +111,12 @@ img {
   outline: none;
   padding-left: 4px;
   padding-right: 4px;
-}
+} */
 
-.SearchForm-input::placeholder {
+/* .SearchForm-input::placeholder {
   font: inherit;
   font-size: 18px;
-}
+} */
 
 /*
  * Стили компонента ImageGallery
