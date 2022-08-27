@@ -11,7 +11,7 @@ export class Searchbar extends Component {
   };
 
   handleChange = (e) => {
-    this.setState({ query: e.target.value});
+    this.setState({ query: e.target.value.toLowerCase()});
     console.log(e.target.value);
   }
 
@@ -22,13 +22,12 @@ export class Searchbar extends Component {
       return Notify.warning('Enter a query', { position: "center-top"});
     }
 
-    this.props.onSubmit(this.state);
+    this.props.onSubmit(this.state.query);
     this.setState({ query: '' });
     console.log(this.state.query);
   };
 
   render() {
-    // console.log(this.handleSubmit);
     return (
         <Header>
           <SearchForm onSubmit={this.handleSubmit}>
