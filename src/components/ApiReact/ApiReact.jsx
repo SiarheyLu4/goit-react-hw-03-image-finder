@@ -57,3 +57,42 @@
   //   }
   // }
 // }
+
+
+
+
+
+
+
+
+
+
+
+// componentDidMount() {
+
+//     this.setState({loading: true})
+
+//     setTimeout(() => {
+//       fetch(`${URL}?key=${KEY}&q=${this.state.query}&page=${this.state.page}&image_type=photo&orientation=horizontal&per_page=12`)
+//       .then(res => res.json())
+//       .then(
+//         (result) => {
+//           this.setState({images: result.hits});
+//         },
+//         // (error) => {
+//         //   this.setState({
+//         //     loading: false,
+//         //     error
+//         //   });
+//         // }
+//       )
+//       .finally(() => this.setState({ loading: false }))
+//     }, 1000);
+//   }
+
+//   componentDidUpdate(prevProps, prevState) {
+//     if (this.state.query !== prevState.query) {
+//       this.setState({ images: [], page: 1 });
+//       this.componentDidMount();
+//     }
+//   }

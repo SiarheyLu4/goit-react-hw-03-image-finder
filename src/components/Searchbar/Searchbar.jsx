@@ -11,8 +11,8 @@ export class Searchbar extends Component {
   };
 
   handleChange = (e) => {
-    this.setState({ query: e.target.value.toLowerCase()});
-    console.log(e.target.value);
+    this.setState({ query: e.currentTarget.value.toLowerCase()});
+    // console.log(e.target.value);
   }
 
   handleSubmit = (e) => { 
@@ -24,7 +24,7 @@ export class Searchbar extends Component {
 
     this.props.onSubmit(this.state.query);
     this.setState({ query: '' });
-    console.log(this.state.query);
+    // console.log(this.state.query);
   };
 
   render() {

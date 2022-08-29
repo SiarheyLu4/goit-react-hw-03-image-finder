@@ -4,72 +4,48 @@ import styled from "styled-components";
 // import { Modal } from "../Modal/Modal";
 // import { ApiReact } from "components/ApiReact/ApiReact";
 import { Searchbar } from "components/Searchbar/Searchbar";
+import { ImagesInfo } from "components/ImagesInfo/ImagesInfo";
 
 
-const URL = "https://pixabay.com/api/";
-const KEY = "28282273-de260e28427aa1fd2a8294f86"
+// const URL = "https://pixabay.com/api/";
+// const KEY = "28282273-de260e28427aa1fd2a8294f86"
 
 export class ImageFinder extends Component {
 
   state = {
     query: '',
-    error: null,
-    loading: false,
-    images: [],
-    page: 1
+    // page: 1,
+    // error: null,
+    // loading: false,
+    // images: [],
+    
   }
 
-  onSubmit = (query) => {
-    this.setState({query, images: [], page: 1})
+  handleFormSubmit = (query) => {
+    this.setState({query, }) // images: [], page: 1
   }
 
-  componentDidMount() {
-
-    this.setState({loading: true})
-
-    setTimeout(() => {
-      fetch(`${URL}?key=${KEY}&q=${this.state.query}&page=${this.state.page}&image_type=photo&orientation=horizontal&per_page=12`)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({images: result.hits});
-        },
-        // (error) => {
-        //   this.setState({
-        //     loading: false,
-        //     error
-        //   });
-        // }
-      )
-      .finally(() => this.setState({ loading: false }))
-    }, 1000);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.query !== prevState.query) {
-      this.setState({ images: [], page: 1 });
-      this.componentDidMount();
-    }
-  }
+  
 
   render() {
     
-    const { images } = this.state;
+    // const { images } = this.state;
 
     return (
       
       <Card>
-        <Searchbar onSubmit={this.onSubmit} />
+        <Searchbar onSubmit={this.handleFormSubmit} />
+        <ImagesInfo onQuery={this.state.query} />
 
-        {this.state.loading && <p>Loading...</p>}
+        {/* {this.state.loading && <p>Loading...</p>} */}
 
-        {this.state.query && (<ul>
+        {/* {this.state.query && (<ul>
           {images.map(item => (
             <li key={item.id}>
               <img src={item.webformatURL} alt={item.tags} />
             </li>
           ))}
-        </ul>)}
+        </ul>)} */}
 
 
         {/* <ul>
