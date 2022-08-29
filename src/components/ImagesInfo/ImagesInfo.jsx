@@ -1,4 +1,5 @@
 import { ImageGallery } from "components/ImageGallery/ImageGallery";
+import { Loader } from "components/Loader/Loader";
 import React, { Component } from "react";
 // import { Notify } from 'notiflix';
 
@@ -60,7 +61,7 @@ export class ImagesInfo extends Component {
     }
 
     if (status === 'pending') {
-      return <h2>Loading...</h2>
+      return <Loader />
     }
 
     if (status === 'rejected') {
@@ -73,20 +74,6 @@ export class ImagesInfo extends Component {
 
     return (
       <>
-        
-        {/* {error && <h2>Image not found!</h2>}
-
-        {loading && <h2>Loading...</h2>}
-
-        {!this.props.onQuery && <h2>Enter keyword</h2>}
-
-        {images && (<ul>
-          {images.map(item => (
-            <li key={item.id}>
-              <img src={item.webformatURL} alt={item.tags} />
-            </li>
-          ))}
-        </ul>)} */}
 
       </>
     )

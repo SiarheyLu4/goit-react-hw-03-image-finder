@@ -37,26 +37,6 @@ export class ImageFinder extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImagesInfo onQuery={this.state.query} />
 
-        {/* {this.state.loading && <p>Loading...</p>} */}
-
-        {/* {this.state.query && (<ul>
-          {images.map(item => (
-            <li key={item.id}>
-              <img src={item.webformatURL} alt={item.tags} />
-            </li>
-          ))}
-        </ul>)} */}
-
-
-        {/* <ul>
-          {images.map(item => (
-            <li key={item.id}>
-              <img src={item.webformatURL} alt={item.tags} />
-            </li>
-          ))}
-        </ul> */}
-
-
         {/* <ApiReact/> */}
         {/* <Modal/> */}
       </Card>
