@@ -1,28 +1,31 @@
+import { ImageGallery } from "components/ImageGallery/ImageGallery";
 import React, { Component } from "react";
-import { Notify } from 'notiflix';
+// import { Notify } from 'notiflix';
 
 
 const URL = "https://pixabay.com/api/";
 const KEY = "28282273-de260e28427aa1fd2a8294f86"
+
+
 
 export class ImagesInfo extends Component {
 
   state = {
     images: [],
     page: 1,
-    loading: false,
+    // loading: false,
     error: null,
+    status: 'idle',
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.onQuery !== this.props.onQuery) {
       // console.log('prevProps.onQuery ', prevProps.onQuery);
       // console.log('this.props.onQuery', this.props.onQuery);
-      this.setState({ loading: true, images: null });
+      this.setState({ status: 'pending' });
 
       setTimeout(() => {
         fetch(`${URL}?key=${KEY}&q=${this.props.onQuery}&page=${this.state.page}&image_type=photo&orientation=horizontal&per_page=12`)
-          // .then(res => res.json())
           .then(response => {
             if (response.ok) {
               return response.json();
@@ -34,23 +37,44 @@ export class ImagesInfo extends Component {
           .then(result => {
             if (result.total === 0) {
               // Notify.warning('Image not found', { position: "center-top"});
-              return this.setState({ error: true, images: [] });
+              return this.setState({ status: 'rejected', images: [] });
             }
-              return this.setState({images: result.hits, error: false});
+              return this.setState({images: result.hits, status: 'resolved'});
           })
-          .catch(error => this.setState({ error }))
-          .finally(() => this.setState({ loading: false }))
+          .catch(error => this.setState({ error, status: 'rejected' }))
       }, 1000);
     }
   }
 
+
+  // 'idle', простой
+// 'pending' ожидание,
+//   'resolved' выполнено с резудьтатомб
+// 'rejected' отклонено
+
   render() {
-    const { error, loading, images} = this.state;
+    const { images, status } = this.state;
+
+    if (status === 'idle') {
+      return <h2>Enter keyword</h2>
+    }
+
+    if (status === 'pending') {
+      return <h2>Loading...</h2>
+    }
+
+    if (status === 'rejected') {
+      return <h2>Image not found!</h2>
+    }
+
+    if (status === 'resolved') {
+      return <ImageGallery images={images} />
+    }
 
     return (
       <>
         
-        {error && <h2>Image not found!</h2>}
+        {/* {error && <h2>Image not found!</h2>}
 
         {loading && <h2>Loading...</h2>}
 
@@ -62,7 +86,7 @@ export class ImagesInfo extends Component {
               <img src={item.webformatURL} alt={item.tags} />
             </li>
           ))}
-        </ul>)}
+        </ul>)} */}
 
       </>
     )
