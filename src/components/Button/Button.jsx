@@ -1,10 +1,15 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from 'prop-types';
 
 export const Button = ({onClick}) => {
   return (
     <Btm type="button" onClick={onClick}>Load more</Btm>
   )
+}
+
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired
 }
 
 const Btm = styled.button`

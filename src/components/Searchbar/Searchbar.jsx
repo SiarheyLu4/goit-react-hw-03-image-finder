@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import PropTypes from 'prop-types';
 import { Notify } from 'notiflix';
 
 export class Searchbar extends Component {
 
   state = {
     query: '',
-    // page: 1,
-    // images: [],
-
   };
 
   handleChange = (e) => {
@@ -29,9 +27,12 @@ export class Searchbar extends Component {
   };
 
   render() {
+    const { query } = this.state;
+    const { handleSubmit, handleChange} = this;
+
     return (
         <Header>
-          <SearchForm onSubmit={this.handleSubmit}>
+          <SearchForm onSubmit={handleSubmit}>
             <SearchFormBtm type="submit">
               <SearchFormBtmLabel>Search</SearchFormBtmLabel>
             </SearchFormBtm>
@@ -42,13 +43,17 @@ export class Searchbar extends Component {
               autoFocus
               placeholder="Search images and photos"
               name="query"
-              onChange={this.handleChange}
-              value={this.state.query}
+              onChange={handleChange}
+              value={query}
             />
           </SearchForm>
         </Header>
     )
   }
+}
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired
 }
 
 const Header = styled.header`

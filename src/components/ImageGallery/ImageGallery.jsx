@@ -1,6 +1,7 @@
 import { ImageGalleryItem } from "components/ImageGalleryItem/ImageGalleryItem";
 import React from "react";
 import styled from "styled-components";
+import PropTypes from 'prop-types';
 
 export const ImageGallery = ({ images }) => {
   return (
@@ -12,6 +13,16 @@ export const ImageGallery = ({ images }) => {
           tags={tags} />
       ))}
     </Ul>
+  )
+}
+
+ImageGallery.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      webformatURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+    })
   )
 }
 

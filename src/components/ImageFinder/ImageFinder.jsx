@@ -40,7 +40,7 @@ export class ImageFinder extends Component {
           })
           .then(result => {
             if (result.total === 0) {
-              return this.setState({ status: 'rejected', images: [] });
+              return this.setState({ status: 'rejected', images: [], loading: false });
             }
             this.setState(prevState => {
             return {
@@ -50,7 +50,7 @@ export class ImageFinder extends Component {
             };
           });
           })
-          .catch(error => this.setState({ error, status: 'rejected' }))
+          .catch(error => this.setState({ error, status: 'rejected'}))
       }, 1000);
     }
   };
