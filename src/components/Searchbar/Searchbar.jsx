@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Notify } from 'notiflix';
 
-
-
 export class Searchbar extends Component {
 
   state = {
     query: '',
+    // page: 1,
+    // images: [],
+
   };
 
   handleChange = (e) => {
@@ -23,7 +24,7 @@ export class Searchbar extends Component {
     }
 
     this.props.onSubmit(this.state.query);
-    this.setState({ query: '' });
+    this.setState({ query: ''});
     // console.log(this.state.query);
   };
 

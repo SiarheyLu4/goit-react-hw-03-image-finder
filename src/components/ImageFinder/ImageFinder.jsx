@@ -2,42 +2,87 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 // import { Modal } from "../Modal/Modal";
-// import { ApiReact } from "components/ApiReact/ApiReact";
 import { Searchbar } from "components/Searchbar/Searchbar";
-import { ImagesInfo } from "components/ImagesInfo/ImagesInfo";
+import { Loader } from "components/Loader/Loader";
+import { ImageGallery } from "components/ImageGallery/ImageGallery";
+import { Button } from "components/Button/Button";
 
-
-// const URL = "https://pixabay.com/api/";
-// const KEY = "28282273-de260e28427aa1fd2a8294f86"
+const URL = "https://pixabay.com/api/";
+const KEY = "28282273-de260e28427aa1fd2a8294f86"
 
 export class ImageFinder extends Component {
 
   state = {
     query: '',
-    // page: 1,
-    // error: null,
+    images: [],
+    page: 1,
     // loading: false,
-    // images: [],
-    
+    error: null,
+    status: 'idle',
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.query !== this.state.query ||
+      prevState.page !== this.state.page) {
+      this.setState({ status: 'pending' });
+
+      setTimeout(() => {
+        fetch(`${URL}?key=${KEY}&q=${this.state.query}&page=${this.state.page}&image_type=photo&orientation=horizontal&per_page=12`)
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            }
+            return Promise.reject(
+              new Error('Image not found!!!')
+            );
+          })
+          .then(result => {
+            if (result.total === 0) {
+              return this.setState({ status: 'rejected', images: [] });
+            }
+            this.setState(prevState => {
+            return {
+              images: [...prevState.images, ...result.hits],
+              status: 'resolved',
+            };
+          });
+          })
+          .catch(error => this.setState({ error, status: 'rejected' }))
+      }, 1000);
+    }
+  };
+  
+  loadMore = () => {
+    this.setState(prevState => {
+      return { page: prevState.page + 1 }
+    });
+  };
 
   handleFormSubmit = (query) => {
-    this.setState({query, }) // images: [], page: 1
+    this.setState({query, images: [], page: 1})
   }
 
-  
-
   render() {
-    
-    // const { images } = this.state;
+
+    const { images, status } = this.state;
 
     return (
       
       <Card>
+        
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImagesInfo onQuery={this.state.query} />
 
-        {/* <ApiReact/> */}
+        {status === 'idle' && <h2>Enter keyword</h2>}
+
+        {status === 'pending' && <Loader />}
+
+        {status === 'rejected' && <h2>Image not found!</h2>}
+
+        {status === 'resolved' && (<>
+          <ImageGallery images={images} />
+          <Button onClick={this.loadMore}/>
+        </>)}
+
         {/* <Modal/> */}
       </Card>
     );
