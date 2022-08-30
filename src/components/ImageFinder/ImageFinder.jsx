@@ -16,7 +16,7 @@ export class ImageFinder extends Component {
     query: '',
     images: [],
     page: 1,
-    // loading: false,
+    loading: false,
     error: null,
     status: 'idle',
   }
@@ -24,7 +24,9 @@ export class ImageFinder extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.query !== this.state.query ||
       prevState.page !== this.state.page) {
-      this.setState({ status: 'pending' });
+      this.setState({
+        loading: true
+      });
 
       setTimeout(() => {
         fetch(`${URL}?key=${KEY}&q=${this.state.query}&page=${this.state.page}&image_type=photo&orientation=horizontal&per_page=12`)
@@ -44,6 +46,7 @@ export class ImageFinder extends Component {
             return {
               images: [...prevState.images, ...result.hits],
               status: 'resolved',
+              loading: false
             };
           });
           })
@@ -64,7 +67,7 @@ export class ImageFinder extends Component {
 
   render() {
 
-    const { images, status } = this.state;
+    const { images, status, loading } = this.state;
 
     return (
       
@@ -74,7 +77,7 @@ export class ImageFinder extends Component {
 
         {status === 'idle' && <h2>Enter keyword</h2>}
 
-        {status === 'pending' && <Loader />}
+        {loading && <Loader />}
 
         {status === 'rejected' && <h2>Image not found!</h2>}
 
