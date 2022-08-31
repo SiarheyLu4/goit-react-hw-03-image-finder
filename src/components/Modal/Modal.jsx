@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
+import PropTypes from 'prop-types';
 
 const selectedModal = document.querySelector('#modal');
 
@@ -26,16 +27,24 @@ export class Modal extends Component {
     }
   };
   
-
   render() {
+
+    const { bigImg, tags } = this.props;
+
     return createPortal(
       <Overlay onClick={this.handleClickBackdrop}>
         <ModalCard>
-          <img src={this.props.bigImg} alt={this.props.tags} />
+          <img src={bigImg} alt={tags} />
         </ModalCard>
       </Overlay>,
       selectedModal)
   }
+}
+
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  bigImg: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired
 }
 
 const Overlay = styled.div`
