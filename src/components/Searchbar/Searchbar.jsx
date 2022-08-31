@@ -15,13 +15,14 @@ export class Searchbar extends Component {
   }
 
   handleSubmit = (e) => { 
+    const { query } = this.state;
     e.preventDefault();
 
-    if (this.state.query.trim() === '') {
+    if (query.trim() === '') {
       return Notify.warning('Enter a query', { position: "center-top"});
     }
 
-    this.props.onSubmit(this.state.query);
+    this.props.onSubmit(query);
     this.setState({ query: ''});
     // console.log(this.state.query);
   };
