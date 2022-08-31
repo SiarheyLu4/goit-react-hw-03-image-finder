@@ -20,11 +20,13 @@ export const ImageGallery = ({ images, modal }) => {
 }
 
 ImageGallery.propTypes = {
+  modal: PropTypes.func.isRequired,
   images: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       webformatURL: PropTypes.string.isRequired,
       tags: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired
     })
   )
 }
