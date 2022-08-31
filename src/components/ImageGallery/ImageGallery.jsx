@@ -3,14 +3,17 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from 'prop-types';
 
-export const ImageGallery = ({ images }) => {
+export const ImageGallery = ({ images, modal }) => {
   return (
     <Ul>
-      {images.map(({id, webformatURL, tags}) => (
+      {images.map(({id, webformatURL, tags, largeImageURL}) => (
         <ImageGalleryItem
           key={id}
           webformatURL={webformatURL}
-          tags={tags} />
+          tags={tags}
+          largeImageURL={largeImageURL}
+          onClick={modal}
+        />
       ))}
     </Ul>
   )

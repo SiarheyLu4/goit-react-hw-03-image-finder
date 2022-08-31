@@ -5,24 +5,36 @@ import styled from "styled-components";
 const selectedModal = document.querySelector('#modal');
 
 export class Modal extends Component {
-  element = document.createElement('div');
 
   componentDidMount() {
-    selectedModal.appendChild(this.element);
+    window.addEventListener('keydown', this.hadleKeyDown)
   };
 
   componentWillUnmount() {
-    selectedModal.removeChild(this.element);
-  }
+    window.removeEventListener('keydown', this.hadleKeyDown)
+  };
 
-  renderContent = () => (
-    <Overlay onClick={this.props.onClose}>
-      <ModalCard/>
-    </Overlay>
-  )
+  hadleKeyDown = e => {
+    if (e.code === 'Escape') {
+      this.props.onClose();
+    }
+  };
+
+  handleClickBackdrop = e => {
+    if (e.currentTarget === e.target) {
+    this.props.onClose();
+    }
+  };
+  
 
   render() {
-    return createPortal (this.renderContent(), this.element)
+    return createPortal(
+      <Overlay onClick={this.handleClickBackdrop}>
+        <ModalCard>
+          <img src={this.props.bigImg} alt={this.props.tags} />
+        </ModalCard>
+      </Overlay>,
+      selectedModal)
   }
 }
 
@@ -42,7 +54,5 @@ const Overlay = styled.div`
 const ModalCard = styled.div`
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 24px);
-  width: 200px;
-  height: 200px;
   background-color: white;
 `

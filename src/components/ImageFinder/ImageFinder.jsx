@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-// import { Modal } from "../Modal/Modal";
+import { Modal } from "../Modal/Modal";
 import { Searchbar } from "components/Searchbar/Searchbar";
 import { Loader } from "components/Loader/Loader";
 import { ImageGallery } from "components/ImageGallery/ImageGallery";
@@ -19,6 +19,9 @@ export class ImageFinder extends Component {
     loading: false,
     error: null,
     status: 'idle',
+    showModal: false,
+    largeImageURL: null,
+    tags: null,
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -65,9 +68,22 @@ export class ImageFinder extends Component {
     this.setState({query, images: [], page: 1})
   }
 
+  toggleModal = (largeImageURL, tags) => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+    this.setState({largeImageURL: largeImageURL, tags: tags})
+  }
+
   render() {
 
-    const { images, status, loading } = this.state;
+    const { images,
+      status,
+      loading,
+      showModal,
+      largeImageURL,
+      tags
+    } = this.state;
 
     return (
       
@@ -82,11 +98,20 @@ export class ImageFinder extends Component {
         {status === 'rejected' && <h2>Image not found!</h2>}
 
         {status === 'resolved' && (<>
-          <ImageGallery images={images} />
+          <ImageGallery
+            images={images}
+            modal={this.toggleModal}
+          />
           <Button onClick={this.loadMore}/>
         </>)}
 
-        {/* <Modal/> */}
+        {showModal && <Modal
+          onClose={this.toggleModal}
+          bigImg={largeImageURL}
+          tags={tags}
+        />}
+
+        
       </Card>
     );
   }

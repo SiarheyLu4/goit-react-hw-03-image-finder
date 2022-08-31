@@ -1,10 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 
-export const ImageGalleryItem = ({ id, webformatURL, tags }) => {
+export const ImageGalleryItem = ({ id, webformatURL, tags, largeImageURL, onClick }) => {
   return (
     <Li key={id}>
-      <Image src={webformatURL} alt={tags} />
+      <Image
+        src={webformatURL}
+        alt={tags}
+        onClick={() => onClick(largeImageURL, tags)}
+      />
     </Li>
   )
 }
