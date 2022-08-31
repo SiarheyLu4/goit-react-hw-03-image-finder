@@ -25,14 +25,16 @@ export class ImageFinder extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.query !== this.state.query ||
-      prevState.page !== this.state.page) {
+    const { query, page} = this.state;
+
+    if (prevState.query !== query ||
+      prevState.page !== page) {
       this.setState({
         loading: true
       });
 
       setTimeout(() => {
-        fetch(`${URL}?key=${KEY}&q=${this.state.query}&page=${this.state.page}&image_type=photo&orientation=horizontal&per_page=12`)
+        fetch(`${URL}?key=${KEY}&q=${query}&page=${page}&image_type=photo&orientation=horizontal&per_page=12`)
           .then(response => {
             if (response.ok) {
               return response.json();
@@ -76,7 +78,6 @@ export class ImageFinder extends Component {
   }
 
   render() {
-
     const { images,
       status,
       loading,
@@ -85,11 +86,13 @@ export class ImageFinder extends Component {
       tags
     } = this.state;
 
+    const { handleFormSubmit, toggleModal, loadMore} = this;
+
     return (
       
       <Card>
         
-        <Searchbar onSubmit={this.handleFormSubmit} />
+        <Searchbar onSubmit={handleFormSubmit} />
 
         {status === 'idle' && <h2>Enter keyword</h2>}
 
@@ -100,18 +103,17 @@ export class ImageFinder extends Component {
         {status === 'resolved' && (<>
           <ImageGallery
             images={images}
-            modal={this.toggleModal}
+            modal={toggleModal}
           />
-          <Button onClick={this.loadMore}/>
+          <Button onClick={loadMore}/>
         </>)}
 
         {showModal && <Modal
-          onClose={this.toggleModal}
+          onClose={toggleModal}
           bigImg={largeImageURL}
           tags={tags}
         />}
 
-        
       </Card>
     );
   }
