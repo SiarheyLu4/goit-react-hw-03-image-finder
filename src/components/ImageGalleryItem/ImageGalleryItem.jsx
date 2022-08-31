@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from 'prop-types';
 
 export const ImageGalleryItem = ({ id, webformatURL, tags, largeImageURL, onClick }) => {
   return (
@@ -11,6 +12,14 @@ export const ImageGalleryItem = ({ id, webformatURL, tags, largeImageURL, onClic
       />
     </Li>
   )
+}
+
+ImageGalleryItem.ropTypes = {
+  id: PropTypes.number.isRequired,
+  webformatURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 }
 
 const Li = styled.li`
