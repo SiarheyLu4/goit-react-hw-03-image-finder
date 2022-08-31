@@ -33,7 +33,7 @@ export class ImageFinder extends Component {
         loading: true
       });
 
-      setTimeout(() => {
+      // setTimeout(() => {
         fetch(`${URL}?key=${KEY}&q=${query}&page=${page}&image_type=photo&orientation=horizontal&per_page=12`)
           .then(response => {
             if (response.ok) {
@@ -56,7 +56,7 @@ export class ImageFinder extends Component {
           });
           })
           .catch(error => this.setState({ error, status: 'rejected'}))
-      }, 1000);
+      // }, 1000);
     }
   };
   
