@@ -91,7 +91,6 @@ export class ImageFinder extends Component {
     return (
       
       <Card>
-        
         <Searchbar onSubmit={handleFormSubmit} />
 
         {status === 'idle' && <h2>Enter keyword</h2>}
@@ -113,7 +112,6 @@ export class ImageFinder extends Component {
           bigImg={largeImageURL}
           tags={tags}
         />}
-
       </Card>
     );
   }
